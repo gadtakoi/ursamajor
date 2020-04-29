@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-9">
+            <h1>Search result</h1>
+        </div>
+        <div class="col">
+            {% include "ursamajor/include/ask_button.html" %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-9">
+            {% if questions %}
+            {% include "ursamajor/include/questions_list.html" %}
+            {% else %}
+            <h4>{{ q }} not found!</h4>
+            {% endif %}
+            {% include "ursamajor/include/paginator.html" %}
+        </div>
+        <div class="col-3">
+            {% include "ursamajor/include/trending.html" %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
