@@ -1,0 +1,12 @@
+- hosts: ursamajor.prod
+  remote_user: root
+
+  vars:
+      host_user: root
+
+  tasks:
+  - include_role:
+      name: ubuntu_basic
+
+  - include_role:
+      name: docker

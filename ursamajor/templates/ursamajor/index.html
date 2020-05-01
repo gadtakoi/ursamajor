@@ -4,19 +4,13 @@
     <div class="row mt-2">
         <div class="col-9">
             <h1>
-                <a href="{% url 'index' %}"><span class="{% if variant != 'hot' %}text-muted{% endif %}">New articles</span></a> |
+                <span class="text-muted">New articles</span>
             </h1>
-        </div>
-        <div class="col">
-            {% include "ursamajor/include/ask_button.html" %}
         </div>
     </div>
     <div class="row">
-        <div class="col-9">
-            {% include "ursamajor/include/questions_list.html" %}
-        </div>
-        <div class="col-3">
-            {% include "ursamajor/include/trending.html" %}
+        <div class="col-18">
+            {% include "ursamajor/include/articles_list.html" %}
         </div>
     </div>
     {% include "ursamajor/include/paginator.html" %}

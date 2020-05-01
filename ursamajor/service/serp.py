@@ -14,14 +14,9 @@ MOBILE_USER_AGENT = "Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M) App
 
 query = "beidou"
 query = query.replace(' ', '+')
-URL = f"https://google.com/search?q={query}&gl=us&hl=en&start=10"
+GOOLE_URL = "https://google.com/search?q={}&gl=us&hl=en&start=60".format(query)
 
 headers = {"user-agent": USER_AGENT}
-proxies = {
-    # 'https': '163.204.247.167:9999',
-    # 'https': '205.158.57.2:53281',
-    # 'http': '',
-}
 
 
 def seprprocess():
@@ -32,37 +27,31 @@ def seprprocess():
 
 def query() -> str:
     if DEBUG:
-        return open('query.txt', 'r')  # открыть файл из рабочей директории в режиме чтения
+        response = requests.get(GOOLE_URL, headers=headers)
+        # return open('query.txt', 'r')  # открыть файл из рабочей директории в режиме чтения
     else:
-        response = requests.get(URL, headers=headers)
+        response = requests.get(GOOLE_URL, headers=headers)
 
-    # for proxy in proxies:
-    #     response = requests.get(URL, headers=headers, proxies=proxies)
-    #     if response.status_code == requests.codes['ok']:
-    #         break
-    #
-    #     response.text
-
-        if response.status_code == 200:
-            # print(response.content)
-            return response.content
-        else:
-            return ''
+    if response and response.status_code == 200:
+        return response.content
+    else:
+        return ''
 
 
 def parse(content: str) -> list:
-    soup = BeautifulSoup(content, "lxml")
     results = list()
-    for g in soup.find_all('div', class_='r'):
-        anchors = g.find_all('a')
-        if anchors:
-            link = anchors[0]['href']
-            title = g.find('h3').text
-            item = {
-                "title": title,
-                "link": link
-            }
-            results.append(item)
 
-    # pprint(results)
+    if content and len(content):
+        soup = BeautifulSoup(content, "lxml")
+        for g in soup.find_all('div', class_='r'):
+            anchors = g.find_all('a')
+            if anchors:
+                link = anchors[0]['href']
+                title = g.find('h3').text
+                item = {
+                    "title": title,
+                    "link": link
+                }
+
+                results.append(item)
     return results

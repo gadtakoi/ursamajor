@@ -1,0 +1,106 @@
+version: "3"
+
+services:
+    ursamajor_nginx:
+        container_name: ursamajor_nginx
+        image: gadtakoi/ursamajor:nginx_1.18
+        restart: always
+#        volumes_from:
+#          - ursamajor_app_1
+  #        - ursamajor_volatile
+  #        - ursamajor_persistent
+        volumes:
+#          - ./nginx/:/etc/nginx/conf.d/
+#          - /etc/localtime:/etc/localtime:ro
+#          - /var/log/docker_container/ursamajor_nginx:/var/log
+          - ./nginxconfig/nginx.conf:/etc/nginx/nginx.conf
+          - ./nginxconfig/sites-enabled/:/etc/nginx/sites-enabled/
+          - ./nginxconfig/nginxconfig.io/:/etc/nginx/nginxconfig.io/
+          - ./nginxconfig/conf.d/:/etc/nginx/conf.d/
+          - /etc/localtime:/etc/localtime:ro
+#          - /var/log/docker_container/ursamajor_nginx:/var/log
+        ports:
+          - '80:80'
+#        depends_on:
+#          - ursamajor_app_1
+#          - ursamajor_app_2
+
+#  ursamajor_nginx_le:
+#    container_name: ursamajor_nginx_le
+#    image: 172.21.0.2:5000/satellite/finland20/nginx_le:1.17.9
+#    command: /bin/bash -c "bash /srv/le.sh && exec nginx -g 'daemon off;'"
+#    restart: always
+#    volumes_from:
+#      - ursamajor_app_1
+#    volumes:
+#      - ./nginxconfig/nginx.conf:/etc/nginx/nginx.conf
+#      - ./nginxconfig/sites-enabled/:/etc/nginx/sites-enabled/
+#      - ./nginxconfig/nginxconfig.io/:/etc/nginx/nginxconfig.io/
+#      - ./nginxconfig/conf.d/:/etc/nginx/conf.d/
+#      - /etc/letsencrypt/:/etc/letsencrypt/
+#      - /etc/localtime:/etc/localtime:ro
+#      - /var/log/docker_container/ursamajor_nginx_le:/var/log
+#    ports:
+#      - '80:80'
+#      - '443:443'
+#    depends_on:
+#      - ursamajor_app_1
+#      - ursamajor_app_2
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "10M"
+#        max-file: "10"
+#    environment:
+#      APP_ENVIRONMENT: $APP_ENVIRONMENT
+
+    ursamajor_app_1:
+      image: gadtakoi/ursamajor:app_${VERSION}
+      container_name: ursamajor_app_1
+      restart: always
+      volumes:
+        - ./gunicorn/:/docker/code/gunicorn/
+        - /etc/localtime:/etc/localtime:ro
+        - /var/log/docker_container/ursamajor_app_1:/var/log
+  #    volumes_from:
+  #      - ursamajor_volatile
+  #      - ursamajor_persistent
+      command: bash -c 'gunicorn -c /docker/code/gunicorn/config.py config.wsgi -p /var/run/gunicorn.pid'
+  #    depends_on:
+  #      - database_pg
+  #    logging:
+  #      driver: "json-file"
+  #      options:
+  #        max-size: "10M"
+  #        max-file: "10"
+  #    environment:
+  #      APP_ENVIRONMENT: $APP_ENVIRONMENT
+  #      VERSION: $VERSION
+
+    ursamajor_app_2:
+      container_name: ursamajor_app_2
+      image: gadtakoi/ursamajor:app_${VERSION}
+      restart: always
+      volumes:
+        - ./gunicorn/:/docker/code/gunicorn/
+        - /etc/localtime:/etc/localtime:ro
+        - /var/log/docker_container/ursamajor_app_2:/var/log
+  #    volumes_from:
+  #      - ursamajor_volatile
+  #      - ursamajor_persistent
+      command: bash -c 'gunicorn -c /docker/code/gunicorn/config.py config.wsgi -p /var/run/gunicorn.pid'
+  #    depends_on:
+  #      - database_pg
+  #    logging:
+  #      driver: "json-file"
+  #      options:
+  #        max-size: "10M"
+  #        max-file: "10"
+  #    environment:
+  #      APP_ENVIRONMENT: $APP_ENVIRONMENT
+  #      VERSION: $VERSION
+
+networks:
+  default:
+    external:
+      name: main

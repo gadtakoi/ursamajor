@@ -1,0 +1,33 @@
+- hosts: ursamajor.prod
+  remote_user: root
+
+  tasks:
+  - name: create directory with source
+    file: path=/opt/ursamajor/docker/deploy state=directory
+
+  - name: copy minimal build sources
+    copy:
+      src: ../docker/deploy/
+      dest: /opt/ursamajor/docker/deploy/
+
+  - name: pull latest image
+    command: /bin/bash /opt/ursamajor/docker/deploy/pull.sh
+    args:
+      chdir: /opt/ursamajor/docker/deploy/
+
+#  - name: build latest image
+#    command: /bin/bash /opt/ursamajor/docker/deploy/build.sh
+#    args:
+#      chdir: /opt/ursamajor/docker/deploy/
+
+  - name: stop containers
+    command: /bin/bash /opt/ursamajor/docker/deploy/stop.sh
+    args:
+      chdir: /opt/ursamajor/docker/deploy/
+
+
+  - name: start containers with {{ rev }}
+    command: /bin/bash /opt/ursamajor/docker/deploy/start.sh {{ rev }}
+    args:
+      chdir: /opt/ursamajor/docker/deploy/
+

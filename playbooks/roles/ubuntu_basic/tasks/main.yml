@@ -1,0 +1,18 @@
+- name: update apt
+  apt:
+    update_cache: yes
+
+- name: install tools
+  apt: name={{item}} state=present
+  with_items:
+       - curl
+       - htop
+       - vim
+       - git
+       - mc
+       - python3-pip
+
+- name: Set timezone to Europe/Moscow
+  when: ansible_date_time.tz != 'Europe/Moscow'
+  command: timedatectl set-timezone 'Europe/Moscow'
+

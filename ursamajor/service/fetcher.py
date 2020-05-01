@@ -13,9 +13,12 @@ def links_process(links: list):
         link = raw_link['link'].strip()
 
         if not contains(link) and not is_exist_in_db(link):
-            result = requests.get(url=link, timeout=TIMEOUT)
-            article = fetch_main_content(result.content)
-            save_page(link=link, html=result.content, article=article)
+            try:
+                result = requests.get(url=link, timeout=TIMEOUT)
+                article = fetch_main_content(result.content)
+                save_page(link=link, html=result.content, article=article)
+            except (requests.exceptions.ConnectTimeout, requests.exceptions.SSLError) as e:
+                pass
 
 
 def fetch_main_content(html: str) -> Article:

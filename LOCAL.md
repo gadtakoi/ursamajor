@@ -17,7 +17,7 @@ ALTER USER ursamajor CREATEDB;
 ### Virtualenv
 
 ```shell script
-cd ursaamajor
+cd ursamajor
 virtualenv -p /usr/bin/python3.8 venv
 source venv/bin/activate
 ```

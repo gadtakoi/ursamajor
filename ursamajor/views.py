@@ -10,19 +10,19 @@ class IndexView(View):
     def get(self, request, **kwargs):
         variant = kwargs.get('variant', '')
         page_num = request.GET.get('page', 1)
-        questions_list = Page.publicated.all().order_by('-date_create')
+        questions_list = Page.publicated.exclude(seo_title='').order_by('-date_create')
 
         paginator = Paginator(questions_list, INDEX_PER_PAGE)
 
         try:
-            questions = paginator.page(page_num)
+            articles = paginator.page(page_num)
         except PageNotAnInteger:
-            questions = paginator.page(1)
+            articles = paginator.page(1)
         except EmptyPage:
-            questions = paginator.page(paginator.num_pages)
+            articles = paginator.page(paginator.num_pages)
 
         context = {
-            'questions': questions,
+            'articles': articles,
             'variant': variant
         }
 

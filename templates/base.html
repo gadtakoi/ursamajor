@@ -20,7 +20,7 @@
             <div class="row container-fluid">
                 <div class="col-4">
                     <a href="{% url 'index' %}" class="navbar-brand d-flex align-items-center">
-                        <img src="{% static 'ursamajor/images/hasker_logo.png' %} ">
+                        <img src="{% static 'ursamajor/images/logo.png' %} ">
                     </a>
                 </div>
                 <div class="col-5">
@@ -29,30 +29,7 @@
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </div>
-                <div class="col-3">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                        {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                {% if request.user.avatar_view %}
-                                    <img src="{{ request.user.avatar_view }}" width="50px"/><br>
-                                {% endif %}
-                            </li>
-                            <li class="nav-item ml-2">
-                                <a class="nav-link active" href=""><ins>{{request.user.get_full_name}}</ins></a>
-                            </li>
-                            <li class="nav-item mt-1">
-                                <a class="nav-link" href=""><i class="fa fa-sign-out"></i></a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="">Log In</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="">Sign Up</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
+                <div class="col-3"></div>
             </div>
     </nav>
 </header>

@@ -1,0 +1,19 @@
+- hosts: ursamajor.prod
+  remote_user: root
+  vars:
+      host_user: root
+
+  tasks:
+   - name: Updates a server
+     apt: update_cache=yes
+
+   - name: Upgrade all apt packages
+     apt: upgrade=dist force_apt_get=yes
+
+   - name: Check if a reboot is required
+     register: file
+     stat: path=/var/run/reboot-required get_md5=no
+
+   - name: Reboot the server
+     command: /sbin/reboot
+     when: file.stat.exists == true
