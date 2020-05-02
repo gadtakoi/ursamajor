@@ -13,7 +13,7 @@ services:
 #          - ./nginx/:/etc/nginx/conf.d/
 #          - /etc/localtime:/etc/localtime:ro
 #          - /var/log/docker_container/ursamajor_nginx:/var/log
-          - /opt/ursamajor_static/:/docker/static
+          - /opt/ursamajor_static/:/opt/ursamajor_static/
           - ./nginxconfig/nginx.conf:/etc/nginx/nginx.conf
           - ./nginxconfig/sites-enabled/:/etc/nginx/sites-enabled/
           - ./nginxconfig/nginxconfig.io/:/etc/nginx/nginxconfig.io/
@@ -60,7 +60,7 @@ services:
       container_name: ursamajor_app_1
       restart: always
       volumes:
-        - /opt/ursamajor_static/:/docker/static
+        - /opt/ursamajor_static/:/opt/ursamajor_static/
         - ./gunicorn/:/docker/code/gunicorn/
         - /etc/localtime:/etc/localtime:ro
         - /var/log/docker_container/ursamajor_app_1:/var/log
@@ -86,7 +86,7 @@ services:
       image: gadtakoi/ursamajor:app_${VERSION}
       restart: always
       volumes:
-        - /opt/ursamajor_static/:/docker/static
+        - /opt/ursamajor_static/:/opt/ursamajor_static/
         - ./gunicorn/:/docker/code/gunicorn/
         - /etc/localtime:/etc/localtime:ro
         - /var/log/docker_container/ursamajor_app_2:/var/log
