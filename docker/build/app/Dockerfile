@@ -1,6 +1,5 @@
 ARG VERSION=latest
-
-FROM gadtakoi/ursamajor:base
+FROM gadtakoi/ursamajor:base_${VERSION}
 
 COPY . /docker/code
 
