@@ -1,8 +1,9 @@
 .idea
 .git
 venv
-/config/settings/local.py
-/ursamajor.iml
-/dockerhub.token.txt
 /.env
 /docker/deploy/postgres/database.env
+/config/settings/local.py
+/dockerhub.token.txt
+/docker/deploy/.env
+/ursamajor.iml

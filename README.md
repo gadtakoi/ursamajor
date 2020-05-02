@@ -1,4 +1,3 @@
 ### local development: LOCAL.md
+### DEPLOY: playbooks/README.md
 
-
-https://code-maze.com/docker-hub-vs-creating-docker-registry/

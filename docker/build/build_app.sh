@@ -12,7 +12,7 @@ SERVER=gadtakoi/ursamajor
 
 export VERSION=${VERSION}
 
-docker build -f app/Dockerfile -t app_${VERSION} -t app_latest ../../ --build-arg VERSION=${BASE_IMAGE_VERSION}
+docker build -f app/Dockerfile -t app_${VERSION} -t app_latest ../../ --build-arg VERSION=${VERSION}
 
 docker tag app_${VERSION} ${SERVER}:app_${VERSION}
 docker push ${SERVER}:app_${VERSION}

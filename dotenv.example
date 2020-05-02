@@ -1,4 +1,4 @@
-SECRET_KEY=<secret-key-secret-key-secret-key-secret-key-secret-key>
+SECRET_KEY='<secret-key-secret-key-secret-key-secret-key-secret-key>'
 DATABASE_URL=postgres://<login>:<password>@127.0.0.1:5432/<DB name given to createdb>
 EMAIL_FROM_ADDRESS='example@gmail.com'
 EMAIL_HOST='smtp.gmail.com'

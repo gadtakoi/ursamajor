@@ -34,11 +34,6 @@ python manage.py collectstatic
 python manage.py createsuperuser
 ```
 
-### Generate test users, tags, question and answers
-```shell script
-python manage.py generate_test_data
-```
-
 ### Run dev server
 ```shell script
 python manage.py runserver

@@ -1,5 +1,10 @@
-**SERVER SETUP** 
-ansible-playbook -i inventory.ini playbook-setup.yml
+**CREATE .env in docker/deploy based on dotenv.example **
+
+**SETUP SERVER** 
+ansible-playbook -i inventory.ini playbook-setup-server.yml
+
+**UPDATE SERVER** 
+ansible-playbook -i inventory.ini playbook-update-server.yml
 
 **DB SETUP**
 ansible-playbook -i inventory.ini playbook-setup-db.ym

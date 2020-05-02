@@ -68,6 +68,8 @@ services:
   #      - ursamajor_volatile
   #      - ursamajor_persistent
       command: bash -c 'gunicorn -c /docker/code/gunicorn/config.py config.wsgi -p /var/run/gunicorn.pid'
+      env_file:
+        - ".env"
   #    depends_on:
   #      - database_pg
   #    logging:
@@ -92,6 +94,9 @@ services:
   #      - ursamajor_volatile
   #      - ursamajor_persistent
       command: bash -c 'gunicorn -c /docker/code/gunicorn/config.py config.wsgi -p /var/run/gunicorn.pid'
+      env_file:
+        - ".env"
+
   #    depends_on:
   #      - database_pg
   #    logging:
