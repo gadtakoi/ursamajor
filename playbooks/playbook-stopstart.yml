@@ -11,7 +11,7 @@
       dest: /opt/ursamajor/docker/deploy/
 
   - name: pull latest image
-    command: /bin/bash /opt/ursamajor/docker/deploy/pull.sh
+    command: /bin/bash /opt/ursamajor/docker/deploy/pull.sh {{ rev }}
     args:
       chdir: /opt/ursamajor/docker/deploy/
 
