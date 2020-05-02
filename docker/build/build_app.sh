@@ -10,6 +10,7 @@ VERSION=$(git rev-parse HEAD)
 BASE_IMAGE_VERSION=${INPUT_VERSION}
 SERVER=gadtakoi/ursamajor
 
+export VERSION=${VERSION}
 
 docker build -f app/Dockerfile -t app_${VERSION} -t app_latest ../../ --build-arg VERSION=${BASE_IMAGE_VERSION}
 

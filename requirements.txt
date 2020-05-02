@@ -1,6 +1,5 @@
 django==3.0.5
 psycopg2==2.8.5
-django-taggit
 python-dotenv
 dj-database-url
 werkzeug==1.0.1
