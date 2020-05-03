@@ -63,7 +63,10 @@ def save_page(link: str, html: str, article: Article):
     p.raw_content = article.text.strip()
     p.name = article.title
     p.is_pub = False
-    p.save()
+    try:
+        p.save()
+    except IntegrityError:
+        pass
 
     p.url = p.build_url()
     p.is_pub = True
