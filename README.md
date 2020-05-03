@@ -2,11 +2,11 @@
 
 ## Installation
 
-**CREATE .env**
+**1. CREATE .env**
 
 in folder docker/deploy/, based on dotenv.example
 
-**CREATE database.env** 
+**2. CREATE database.env** 
 
 in folder docker/deploy/postgres/, based on database.env-EXAMPLE
 
@@ -14,19 +14,19 @@ in folder docker/deploy/postgres/, based on database.env-EXAMPLE
 
 in folder playbooks/, based on inventory.ini-EXAMPLE
 
-**SETUP SERVER** 
+**3. SETUP SERVER** 
 
 `ansible-playbook -i inventory.ini playbook-setup-server.yml`
 
-**UPDATE SERVER** 
+**4. UPDATE SERVER** 
 
 `ansible-playbook -i inventory.ini playbook-update-server.yml`
 
-**DB SETUP**
+**5. DB SETUP**
 
 `ansible-playbook -i inventory.ini playbook-setup-db.ym`
 
-**BUILD IMAGES**
+**6. BUILD IMAGES**
 
 `cd /docker/build`
 
@@ -34,11 +34,11 @@ in folder playbooks/, based on inventory.ini-EXAMPLE
 
 `./build_app.sh`
 
-**START PROJECT** 
+**7. START PROJECT** 
 
 `ansible-playbook playbook-stopstart.yml -e rev=954c8ta9c1392iv85an5f3ch00414en34k5o5164`
 
-**DEPLOY** 
+**8. DEPLOY** 
 
 `ansible-playbook playbook-deploy.yml`
 

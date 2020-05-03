@@ -1,6 +1,7 @@
 import dj_database_url
 
 from .email import *
+from .yandex import *
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
