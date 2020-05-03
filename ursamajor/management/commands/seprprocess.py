@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from django.core.management.base import BaseCommand
 from ursamajor.service.serp import seprprocess
 from ursamajor.service.fetcher import links_process
@@ -11,4 +9,3 @@ class Command(BaseCommand):
         links = seprprocess()
         links_process(links)
         translate_run()
-        # pprint(seprprocess())

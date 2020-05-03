@@ -1,4 +1,4 @@
-**CREATE .env in docker/deploy based on dotenv.example **
+**CREATE .env in folder docker/deploy, based on dotenv.example **
 
 **SETUP SERVER** 
 ansible-playbook -i inventory.ini playbook-setup-server.yml

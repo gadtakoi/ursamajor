@@ -1,16 +1,12 @@
 from django.db import models
-from django.db.models import Q
 from django.urls import reverse
-from django.utils import timezone
-from django.utils.html import strip_tags
-from django.utils.text import Truncator
 from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 from tinymce_4.fields import TinyMCEModelField
 
-from config.settings import MEDIA_URL
 from ursamajor.managers import PublicatedPageManager
 from ursamajor.models import SEOMixin
+from ursamajor.models.layout import Layouts
 
 
 class Page(MPTTModel, SEOMixin):
@@ -36,26 +32,11 @@ class Page(MPTTModel, SEOMixin):
         on_delete=models.CASCADE
     )
 
-    LAYOUT_INDEX = 0
-    LAYOUT_PAGE = 1
-
-    layouts = {
-        'index': (LAYOUT_INDEX, 'главная'),
-        'article': (LAYOUT_PAGE, 'статья'),
-    }
-
-    choose_layout = (
-        (LAYOUT_INDEX, 'главная'),
-        (LAYOUT_PAGE, 'статья'),
-    )
-
     layout = models.IntegerField(
         verbose_name='шаблон',
-        choices=choose_layout,
-        null=True
+        choices=Layouts.choices,
+        null=Layouts.LAYOUT_PAGE
     )
-
-    preview = models.TextField(null=True, verbose_name="Текст превью", blank=True, default='')
 
     source_url = models.CharField(null=True, blank=True, default='', max_length=255)
     raw_html = models.TextField(null=True, blank=True, default='')
@@ -70,6 +51,22 @@ class Page(MPTTModel, SEOMixin):
 
     def is_index(self):
         return self.url == ''
+
+    def get_title(self):
+        return self.seo_title or self.seo_title or self.name
+
+    def get_h1(self):
+        return self.seo_h1 or self.seo_title or self.name
+
+    def get_content(self):
+        return "<br />".join(self.content.split("\n"))
+
+    @property
+    def url_html(self) -> str:
+        if self.url:
+            return "/{}/".format(self.url)
+        elif self.url == '' or self.url == '/':
+            return "/"
 
     def build_url(self):
         chunks = []
@@ -88,60 +85,9 @@ class Page(MPTTModel, SEOMixin):
         url = '/'.join(filter(nonempty, chunks))
         return url
 
-    def get_title(self):
-        return self.seo_title or self.name
-
-    def get_h1(self):
-        return self.seo_h1 or self.name
-
-    def get_articles(self, req=None):
-        queryset = self.get_descendants().filter(*Page.articles.get_query())
-        return queryset.order_by('-position', '-pub_time')
-
-    def get_pub_siblings(self, include_self=False):
-
-        if self.is_root_node():
-            queryset = self._tree_manager._mptt_filter(parent=None)
-        else:
-            parent_id = getattr(self, self._mptt_meta.parent_attr + '_id')
-            queryset = self._tree_manager._mptt_filter(parent__pk=parent_id,
-                                                       is_pub=True)
-        if not include_self:
-            queryset = queryset.exclude(pk=self.pk)
-        return queryset
-
-    def get_subsection_items(self):
-        query = Page.publicated.get_query() + (Q(layout=Page.LAYOUT_ARTICLE) | Q(layout=Page.LAYOUT_CALC),)
-        return self.get_descendants().filter(*query).order_by('-position', '-pub_time')
-
-    def get_content_preview(self):
-        text = strip_tags(self.content)
-        return Truncator(text).chars(self.MAX_CONTENT_PREVIEW_LEN)
-
-    @property
-    def url_html(self) -> str:
-        if self.url:
-            return '/' + self.url + '/'
-        elif self.url == '' or self.url == '/':
-            return '/'
-
     def __init__(self, *args, **kwargs):
         super(Page, self).__init__(*args, **kwargs)
         self.articles = []
-
-    @property
-    def domain(self):
-        return self.site_settings.site.domain
-
-    @property
-    def schema(self):
-        if self.site_settings.use_https:
-            return 'https'
-        else:
-            return 'http'
-
-    def get_host(self):
-        return "{}://{}".format(self.schema, self.domain)
 
     def __str__(self):
         return self.name

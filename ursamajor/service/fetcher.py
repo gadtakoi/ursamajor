@@ -1,8 +1,10 @@
 import requests as requests
+from django.utils.text import slugify
 
 from newspaper import Article
 
 from ursamajor.models import Page
+from ursamajor.models.layout import Layouts
 from ursamajor.service.exceptions import contains
 
 TIMEOUT = 10
@@ -31,18 +33,25 @@ def fetch_main_content(html: str) -> Article:
 
 def save_page(link: str, html: str, article: Article):
     p = Page()
-    p.layout = p.LAYOUT_PAGE
-    p.url = link
+    p.layout = Layouts.LAYOUT_PAGE
+    p.slug = slugify(article.title)[:50]
+    p.url = p.slug
+    p.parent = get_section()
+    p.source_url = link
     p.raw_html = html
     p.raw_content = article.text.strip()
     p.name = article.title
-
     p.save()
+    p.url = p.build_url()
+    p.save()
+
+def get_section():
+    return Page.publicated.filter(layout=Layouts.LAYOUT_SECTION).first()
 
 
 def is_exist_in_db(link: str) -> bool:
     try:
-        Page.objects.get(url=link)
+        Page.objects.get(source_url=link)
         return True
     except Page.DoesNotExist:
         return False

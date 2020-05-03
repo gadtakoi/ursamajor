@@ -1,5 +1,4 @@
 import json
-
 import requests
 
 from config.settings import YNDX_TRNS_URL
@@ -14,7 +13,6 @@ def run():
         raw_content = page.raw_content.strip()
         raw_name = page.name.strip()
         if raw_content:
-            print('page=', page)
             data = {
                 'text': raw_name
             }
@@ -26,7 +24,6 @@ def run():
             result_content = requests.post(url=YNDX_TRNS_URL, data=data, timeout=TIMEOUT)
             text = json.loads(result_content.content)
             if text['code'] == 200:
-                print('texttexttexttext=====', text)
                 page.seo_title = name['text'][0]
                 page.content = text['text'][0]
                 page.translated = True

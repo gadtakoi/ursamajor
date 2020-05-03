@@ -27,3 +27,11 @@ class IndexView(View):
         }
 
         return render(request, 'ursamajor/index.html', context)
+
+
+class PageView(View):
+    def get(self, request, url):
+        page_url = "articles/{}".format(url)
+        q = Page.objects.get(url=page_url)
+        q.page_num = int(request.GET.get('page', 1))
+        return render(request, 'ursamajor/page_view.html', {'page': q})
