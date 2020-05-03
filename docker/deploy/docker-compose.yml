@@ -33,7 +33,7 @@ services:
       - ./gunicorn/:/docker/code/gunicorn/
       - /etc/localtime:/etc/localtime:ro
       - /var/log/docker_container/ursamajor_app_1:/var/log
-    command: bash -c 'gunicorn -c /docker/code/gunicorn/config.py config.wsgi -p /var/run/gunicorn.pid'
+    command: bash -c 'python manage.py migrate && python manage.py collectstatic --no-input --clear && gunicorn -c /docker/code/gunicorn/config.py config.wsgi -p /var/run/gunicorn.pid'
     env_file:
       - ".env"
     logging: *default-logging
