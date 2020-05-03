@@ -2,6 +2,7 @@ import aiohttp
 import asyncio
 
 import requests as requests
+from django.db import IntegrityError
 from django.utils.text import slugify
 
 from newspaper import Article
@@ -61,9 +62,15 @@ def save_page(link: str, html: str, article: Article):
     p.raw_html = html
     p.raw_content = article.text.strip()
     p.name = article.title
+    p.is_pub = False
     p.save()
+
     p.url = p.build_url()
-    p.save()
+    p.is_pub = True
+    try:
+        p.save()
+    except IntegrityError:
+        pass
 
 
 def get_section():

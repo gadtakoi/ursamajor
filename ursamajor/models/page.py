@@ -14,7 +14,7 @@ class Page(MPTTModel, SEOMixin):
     publicated = PublicatedPageManager()
 
     name = models.CharField(verbose_name='название', max_length=255)
-    slug = models.CharField(verbose_name='псевдоним', max_length=50, default='', blank=True)
+    slug = models.CharField(verbose_name='псевдоним', max_length=150, default='', blank=True)
     url = models.CharField(verbose_name='URL', max_length=255, blank=True, unique=True)
     image = models.ImageField(verbose_name='изображение', null=True, blank=True)
 
