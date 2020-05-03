@@ -15,22 +15,16 @@ TIMEOUT = 10
 
 async def fetch(session, url):
     async with session.get(url) as response:
-        return await response.text(), url
+        return await response.content.read(), url
 
 
 async def fetch_all(urls):
     async with aiohttp.ClientSession() as session:
-        # for url in urls:
-        #     print('key, url', url)
         texts = await asyncio.gather(*[
             fetch(session, url)
             for url in urls
         ])
         return texts
-
-
-# years_to_fetch = [f'https://en.wikipedia.org/wiki/{year}' for year in range(1990, 2020)]
-# asyncio.run(fetch_all(years_to_fetch))
 
 
 def links_process_async(links: list):
@@ -47,7 +41,6 @@ def links_process_async(links: list):
             save_page(link=out[1], html=out[0], article=article)
         except (requests.exceptions.ConnectTimeout, requests.exceptions.SSLError) as e:
             pass
-
 
 
 def fetch_main_content(html: str) -> Article:
