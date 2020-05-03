@@ -1,1 +1,0 @@
-psql --host=database --username=ursamajor --dbname=ursamajor

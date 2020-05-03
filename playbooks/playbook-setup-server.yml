@@ -10,3 +10,9 @@
 
   - include_role:
       name: docker
+
+  - name: Add cronjob for fetch news
+    cron:
+      name: "Fetch news"
+      special_time: daily
+      job: docker exec -it ursamajor_app_1 bash -c './manage.py seprprocess'

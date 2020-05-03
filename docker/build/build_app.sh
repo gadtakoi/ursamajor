@@ -7,7 +7,6 @@ if [ -z "${INPUT_VERSION}" ]; then
 fi
 
 VERSION=$(git rev-parse HEAD)
-BASE_IMAGE_VERSION=${INPUT_VERSION}
 SERVER=gadtakoi/ursamajor
 
 export VERSION=${VERSION}

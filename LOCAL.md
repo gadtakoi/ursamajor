@@ -38,3 +38,8 @@ python manage.py createsuperuser
 ```shell script
 python manage.py runserver
 ```
+
+### Run news fetcher
+```shell script
+python manage.py seprprocess
+```

@@ -45,6 +45,7 @@ def save_page(link: str, html: str, article: Article):
     p.url = p.build_url()
     p.save()
 
+
 def get_section():
     return Page.publicated.filter(layout=Layouts.LAYOUT_SECTION).first()
 
