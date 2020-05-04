@@ -22,10 +22,10 @@ in folder playbooks/, based on inventory.ini-EXAMPLE
 
 `ansible-playbook -i inventory.ini playbook-update-server.yml`
 
-######Здесь возможно придётся зайти на сервер и запустить
+###### Здесь возможно придётся зайти на сервер и запустить
 `apt upgrade`
 
-######Также после этой команды возможна перезагрузка сервера
+###### Также после этой команды возможна перезагрузка сервера
  
 **5. DB SETUP**
 
