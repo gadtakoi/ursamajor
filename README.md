@@ -34,9 +34,8 @@ in folder playbooks/, based on inventory.ini-EXAMPLE
 **6. BUILD IMAGES**
 
 `cd /docker/build`
-
+`./build_nginx.sh`
 `./build_base.sh`
-
 `./build_app.sh`
 
 **7. START PROJECT** 
